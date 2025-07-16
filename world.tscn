@@ -1,0 +1,103 @@
+[gd_scene load_steps=9 format=3 uid="uid://dlpih357qcd51"]
+
+[ext_resource type="Script" uid="uid://dxymsy6lqw7yv" path="res://world.gd" id="1_aqk2v"]
+[ext_resource type="Texture2D" uid="uid://7ff4kcwuc84i" path="res://bg001.png" id="1_f3sb7"]
+[ext_resource type="Texture2D" uid="uid://xkuianutfsds" path="res://academy_base.png" id="2_fj7yv"]
+[ext_resource type="Script" uid="uid://b7ei4t2s2l4tk" path="res://web_socket_server.gd" id="2_pkg7o"]
+[ext_resource type="Script" uid="uid://ds14jdkspj5w5" path="res://shield.gd" id="3_tlwt5"]
+[ext_resource type="Texture2D" uid="uid://call3xb46bdqr" path="res://large_panel_for_aliens.png" id="6_gbfbk"]
+[ext_resource type="FontFile" uid="uid://cc1ybqxkpwx11" path="res://Kenney Future.ttf" id="7_ioo17"]
+
+[sub_resource type="Theme" id="Theme_wse8f"]
+default_font = ExtResource("7_ioo17")
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_aqk2v")
+
+[node name="WebSocketServer" type="Node" parent="."]
+script = ExtResource("2_pkg7o")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(576.75, 323.25)
+scale = Vector2(1.27127, 0.915363)
+texture = ExtResource("1_f3sb7")
+
+[node name="Base" type="Sprite2D" parent="."]
+position = Vector2(583, 522)
+scale = Vector2(0.127778, 0.127778)
+texture = ExtResource("2_fj7yv")
+
+[node name="Shield" type="Node2D" parent="."]
+script = ExtResource("3_tlwt5")
+
+[node name="Panel" type="Panel" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+offset_left = 912.0
+offset_top = 2.0
+offset_right = 1151.0
+offset_bottom = 644.0
+
+[node name="panel_image" type="Sprite2D" parent="Panel"]
+modulate = Color(1, 1, 1, 0.898039)
+position = Vector2(118.972, 321)
+scale = Vector2(0.237819, 0.236949)
+texture = ExtResource("6_gbfbk")
+
+[node name="LabelStage" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.084
+anchor_top = 0.05
+anchor_right = 0.084
+anchor_bottom = 0.05
+offset_left = 60.924
+offset_top = -0.100002
+offset_right = 257.924
+offset_bottom = 31.9
+theme = SubResource("Theme_wse8f")
+text = "Stage 1"
+
+[node name="LabelRegistered" type="Label" parent="Panel"]
+modulate = Color(0.0705882, 0.0705882, 0.0705882, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.105
+anchor_top = 0.826
+anchor_right = 0.105
+anchor_bottom = 0.826
+offset_left = -0.0950012
+offset_top = -0.291992
+offset_right = 196.905
+offset_bottom = 31.708
+theme = SubResource("Theme_wse8f")
+text = "Registered: NO"
+
+[node name="LabelShieldsUp" type="Label" parent="Panel"]
+modulate = Color(0.0705882, 0.0705882, 0.0705882, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.105
+anchor_top = 0.826
+anchor_right = 0.105
+anchor_bottom = 0.826
+offset_left = 2.905
+offset_top = 25.708
+offset_right = 199.905
+offset_bottom = 57.708
+theme = SubResource("Theme_wse8f")
+text = "Shields: DOWN"
+
+[node name="LabelShieldLvl" type="Label" parent="Panel"]
+modulate = Color(0.0705882, 0.0705882, 0.0705882, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.105
+anchor_top = 0.826
+anchor_right = 0.105
+anchor_bottom = 0.826
+offset_left = 2.905
+offset_top = 48.708
+offset_right = 199.905
+offset_bottom = 80.708
+theme = SubResource("Theme_wse8f")
+text = "SHIELD LEVEL: 0"
