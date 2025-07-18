@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dlpih357qcd51"]
+[gd_scene load_steps=11 format=3 uid="uid://dlpih357qcd51"]
 
 [ext_resource type="Script" uid="uid://dxymsy6lqw7yv" path="res://world.gd" id="1_aqk2v"]
 [ext_resource type="Texture2D" uid="uid://7ff4kcwuc84i" path="res://bg001.png" id="1_f3sb7"]
@@ -9,6 +9,12 @@
 [ext_resource type="FontFile" uid="uid://cc1ybqxkpwx11" path="res://Kenney Future.ttf" id="7_ioo17"]
 
 [sub_resource type="Theme" id="Theme_wse8f"]
+default_font = ExtResource("7_ioo17")
+
+[sub_resource type="Theme" id="Theme_pkg7o"]
+default_font = ExtResource("7_ioo17")
+
+[sub_resource type="Theme" id="Theme_gbfbk"]
 default_font = ExtResource("7_ioo17")
 
 [node name="World" type="Node2D"]
@@ -80,10 +86,10 @@ anchor_left = 0.105
 anchor_top = 0.826
 anchor_right = 0.105
 anchor_bottom = 0.826
-offset_left = 2.905
-offset_top = 25.708
-offset_right = 199.905
-offset_bottom = 57.708
+offset_left = 4.905
+offset_top = 26.708
+offset_right = 201.905
+offset_bottom = 58.708
 theme = SubResource("Theme_wse8f")
 text = "Shields: DOWN"
 
@@ -101,3 +107,37 @@ offset_right = 199.905
 offset_bottom = 80.708
 theme = SubResource("Theme_wse8f")
 text = "SHIELD LEVEL: 0"
+
+[node name="LabelHint" type="Label" parent="Panel"]
+modulate = Color(0.0705882, 0.0705882, 0.0705882, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.105
+anchor_top = 0.826
+anchor_right = 0.105
+anchor_bottom = 0.826
+offset_left = -3.095
+offset_top = -452.292
+offset_right = 195.905
+offset_bottom = -78.292
+theme = SubResource("Theme_wse8f")
+text = "Do the thing!"
+autowrap_mode = 3
+
+[node name="ButtonDebugNextStage" type="Button" parent="."]
+offset_left = 1.0
+offset_top = 60.0
+offset_right = 187.0
+offset_bottom = 109.0
+theme = SubResource("Theme_pkg7o")
+text = "Next stage"
+
+[node name="ButtonResetProgress" type="Button" parent="."]
+offset_top = 8.0
+offset_right = 173.0
+offset_bottom = 57.0
+theme = SubResource("Theme_gbfbk")
+text = "Reset Progress"
+
+[connection signal="pressed" from="ButtonDebugNextStage" to="." method="_debug_next_stage"]
+[connection signal="pressed" from="ButtonResetProgress" to="." method="_reset_progress"]

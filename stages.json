@@ -1,0 +1,38 @@
+{
+	 "1": {
+         "hint": "Register your name and a PIN with the academy",
+         "url": "https://atar.tools"
+          },
+     "2": {
+         "hint": "Power the shields on and set the target level to 100",
+         "url": "https://atar.tools"
+          },
+     "3": {
+         "hint": "Direct the battery to charge the shields by the exact correct amount",
+         "url": "https://atar.tools"
+          },
+     "4": {
+         "hint": "Use the space scanner to check the distance of the alien fleet",
+         "url": "https://atar.tools"
+          },
+     "5": {
+         "hint": "Use the translator to decode the first Alien message",
+         "url": "https://atar.tools"
+          },
+     "6": {
+         "hint": "Use the translator on a loop to decode ALL the alien messages",
+         "url": "https://atar.tools"
+          },
+     "7": {
+         "hint": "The aliens have scrambled your PIN! Hack the first door using brute force to get in!",
+         "url": "https://atar.tools"
+          },
+     "8": {
+         "hint": "The internal door needs a different PIN - this time you have to hack in in 14 or fewer attempts!",
+         "url": "https://atar.tools"
+          },
+     "9": {
+         "hint": "Register your client for shields or lasers - let's defend Earth and send these aliens away!",
+         "url": "https://atar.tools"
+          }
+}
