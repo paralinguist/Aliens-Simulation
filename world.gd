@@ -63,6 +63,27 @@ func advance_stage():
 func _debug_next_stage():
     advance_stage()
 
+func register(new_user, new_pin):
+    var result = "Error registering"
+    if not registered:
+        username = new_user
+        pin = new_pin
+        registered = true
+        advance_stage()
+        result = "Successfully registered user " + new_user
+    else:
+        result = "Already registered!"
+    return result
+    
 
 func _reset_progress():
-    
+    shields_up = false
+    shields_target = 0
+    shields_level = 0
+    registered = false
+    username = "clarence"
+    pin = 0
+    logged_in = false
+    stage = 0
+    save_progress()
+    advance_stage()

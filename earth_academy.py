@@ -14,7 +14,6 @@ message_stack = []
 #encounter_state (WAITING, IN_PROGRESS, ENDED_FAIL, ENDED_WIN, UDEAD)
 
 playername = 'Clarence'
-role = 'lockpick'
 connection_id = 0
 
 shields_enabled = False
@@ -34,7 +33,8 @@ def listener(_server):
             server_message = _server.recv()#.decode("utf-8")
             try:
                 server_response = json.loads(server_message)
-                message_stack.append(server_response)
+                #message_stack.append(server_response)
+                print(server_response)
             except:
                 print("Server sent non-JSON response!")
         except Exception as e:
@@ -43,31 +43,18 @@ def listener(_server):
 
 #Instruction must already have at least an action
 def send_instruction(instruction):
-    instruction["role"] = role
     instruction["version"] = api_version
     server.send(json.dumps(instruction))
-
-def move(direction):
-    instruction = {"action":"move", "direction":direction}
-    send_instruction(instruction)
 
 def set_shields():
     instruction = {"action":"shields", "enabled":shields_enabled, "target_level":shields_target, "adjust": shields_add}
     send_instruction(instruction)
 
-def pick(target, state = "begin"):
-    instruction = {"action":"pick", "item":target, "state":state}
+def register(username, pin):
+    instruction = {"action":"register", "username":username, "pin":pin}
     send_instruction(instruction)
 
-def distract(target, state = "begin"):
-    instruction = {"action":"distract", "item":target, "state":state}
-    send_instruction(instruction)
-    
-def use(target):
-    instruction = {"action":"use", "item":target}
-    send_instruction(instruction)
-
-def action(item_id, action_type):
+def sign_in(username, pin):
     pass
 
 def disconnect():
@@ -77,10 +64,8 @@ def disconnect():
     active = False
     server.close()
 
-def connect(_role, _ip, _port):
+def connect(_ip, _port):
     global server
-    global role
-    role = _role
     connected = False
     try:
         server = create_connection(f"ws://{_ip}:{_port}")

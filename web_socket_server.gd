@@ -140,15 +140,14 @@ func get_message(peer_id: int) -> Variant:
     if socket.was_string_packet():
         var message = pkt.get_string_from_utf8()
         if message.begins_with("join|"):
-            var player_role = message.right(len(message) - 5)
-            emit_signal("new_player", player_role)
-            print(player_role + " has joined!")
+            emit_signal("new_player")
+            print(peers[peer_id].get_connected_host() + " has joined!")
         else:
             var heist_instruction = JSON.new()
             if heist_instruction.parse(message) == OK:
                 var instruction = heist_instruction.data
                 if instruction["action"] == "join":
-                    print(instruction["role"] + " has joined!" + "(API: " + instruction["version"] + ")")
+                    print(peers[peer_id].get_connected_host() + " has joined!" + "(API: " + instruction["version"] + ")")
                     #emit_signal("new_player", instruction["role"])
                 elif instruction["action"] == "shields":
                     print("Shields switch active!")
@@ -158,62 +157,12 @@ func get_message(peer_id: int) -> Variant:
                         get_parent().set_shields(instruction["adjust"])
                     else:
                         print(instruction)
-                elif instruction["action"] in ["hack", "pick", "use", "distract"]:
-                    if instruction.has("state"):
-                        if instruction["role"] == "lockpick":
-                            get_parent().play_lockpick()
-                        elif instruction["role"] == "earpiece":
-                            get_parent().play_earpiece()
-                        elif instruction["role"] == "hacker":
-                            get_parent().play_hacker()
-                        elif instruction["role"] == "charmer":
-                            get_parent().play_charmer()
-                        match instruction["state"]:
-                            "begin":
-                                var response = {"type": "begin_action", "id": str(instruction["item"])}
-                                if instruction["action"] == "hack":
-                                    emit_signal("movement_lock_toggle", instruction["role"], true)
-                                    var addresses = get_parent().get_addresses_around_item(str(instruction["item"]))
-                                    response["data"] = addresses
-                                elif instruction["action"] == "pick":
-                                    emit_signal("movement_lock_toggle", instruction["role"], true)
-                                    response["data"] = get_parent().get_serial_number(str(instruction["item"]))
-                                    response["pick_type"] = "pick"
-                                    if get_parent().get_type_of_item(str(instruction["item"])) == "safe":
-                                        response["pick_type"] = "crack"
-                                elif instruction["action"] in ["distract", "pickpocket"]:
-                                    response["data"] = get_parent().get_employee_info(str(instruction["item"]))
-                                    print(response["data"])
-                                    emit_signal("action", instruction["role"], str(instruction["item"]), instruction["action"])
-                                send(peer_id, JSON.stringify(response))
-                            "success":
-                                if instruction["role"] == "charmer":
-                                    get_parent().play_charm_success()
-                                emit_signal("action", instruction["role"], str(instruction["item"]), instruction["action"])
-                                emit_signal("movement_lock_toggle", instruction["role"], false)
-                            "failed":
-                                emit_signal("heat_up", 8)
-                                emit_signal("movement_lock_toggle", instruction["role"], false)
-                            "cancel":
-                                emit_signal("heat_up", 2)
-                                emit_signal("movement_lock_toggle", instruction["role"], false)
-                    elif instruction["action"] == "use":
-                        if get_parent().get_type_of_item(str(instruction["item"])) == "file":
-                            var guard_data = get_parent().get_all_employee_info()
-                            var response = {"type": "earpiece_info", "id": str(instruction["item"]), "data": guard_data}
-                            send(peer_id, JSON.stringify(response))
-                        elif get_parent().get_type_of_item(str(instruction["item"])) == "blueprint":
-                            var lock_data = get_parent().get_all_serials()
-                            var response = {"type": "earpiece_info", "id": str(instruction["item"]), "data": lock_data}
-                            send(peer_id, JSON.stringify(response))
-                        elif get_parent().get_type_of_item(str(instruction["item"])) == "computer":
-                            var device_data = get_parent().get_all_devices()
-                            var response = {"type": "earpiece_info", "id": str(instruction["item"]), "data": device_data}
-                            send(peer_id, JSON.stringify(response))
-                        else:
-                            emit_signal("action", instruction["role"], str(str(instruction["item"])), instruction["action"])
-                    else:
-                        emit_signal("action", instruction["role"], str(str(instruction["item"])), instruction["action"])
+                elif instruction["action"] == "register":
+                    print("Registering user...")
+                    #Should do validation here
+                    var result = get_parent().register(instruction["username"], instruction["pin"])
+                    var response = {"type":"result", "data":result}
+                    send(peer_id, JSON.stringify(response))
             else:
                 print("Could not parse instruction - not JSON?")
                 print(message)

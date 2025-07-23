@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dlpih357qcd51"]
+[gd_scene load_steps=12 format=3 uid="uid://dlpih357qcd51"]
 
 [ext_resource type="Script" uid="uid://dxymsy6lqw7yv" path="res://world.gd" id="1_aqk2v"]
 [ext_resource type="Texture2D" uid="uid://7ff4kcwuc84i" path="res://bg001.png" id="1_f3sb7"]
@@ -10,6 +10,9 @@
 
 [sub_resource type="Theme" id="Theme_wse8f"]
 default_font = ExtResource("7_ioo17")
+
+[sub_resource type="LabelSettings" id="LabelSettings_pkg7o"]
+font_size = 43
 
 [sub_resource type="Theme" id="Theme_pkg7o"]
 default_font = ExtResource("7_ioo17")
@@ -124,17 +127,35 @@ theme = SubResource("Theme_wse8f")
 text = "Do the thing!"
 autowrap_mode = 3
 
+[node name="LabelHint2" type="Label" parent="Panel"]
+modulate = Color(1, 0.0705882, 0.0705882, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.105
+anchor_top = 0.826
+anchor_right = 0.105
+anchor_bottom = 0.826
+offset_left = -659.095
+offset_top = -433.292
+offset_right = -166.095
+offset_bottom = -335.292
+theme = SubResource("Theme_wse8f")
+text = "ERRORS HERE!"
+label_settings = SubResource("LabelSettings_pkg7o")
+autowrap_mode = 3
+
 [node name="ButtonDebugNextStage" type="Button" parent="."]
-offset_left = 1.0
-offset_top = 60.0
-offset_right = 187.0
-offset_bottom = 109.0
+offset_left = 9.0
+offset_top = 61.0
+offset_right = 196.0
+offset_bottom = 110.0
 theme = SubResource("Theme_pkg7o")
 text = "Next stage"
 
 [node name="ButtonResetProgress" type="Button" parent="."]
+offset_left = 9.0
 offset_top = 8.0
-offset_right = 173.0
+offset_right = 196.0
 offset_bottom = 57.0
 theme = SubResource("Theme_gbfbk")
 text = "Reset Progress"
